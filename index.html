@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="theme-color" content="#B0764A">
+<title>岩石きょうだいクイズ</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icons/favicon.png">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<style>
+:root{
+  --bg:#F6F1E7;
+  --card:#FFFFFF;
+  --text:#3A322A;
+  --sub:#8A7C6C;
+  --accent:#B0764A;
+  --accent-2:#E3A857;
+  --deep:#6B8F71;
+  --volcanic:#C1533B;
+  --white-rock:#EDEAE0;
+  --mid-rock:#B7A99A;
+  --black-rock:#4A4038;
+  --good:#5D9C6C;
+  --bad:#C1533B;
+  --border:#E4DACB;
+  --shadow: 0 4px 14px rgba(90,70,40,0.12);
+  --deep-bubble-bg:#E5EDE6;
+  --deep-bubble-border:#AFC7B4;
+  --volc-bubble-bg:#F6E3DD;
+  --volc-bubble-border:#E0AA9B;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#221D18;
+    --card:#2E2820;
+    --text:#F1E9DC;
+    --sub:#B6A891;
+    --border:#463C30;
+    --white-rock:#4A4238;
+    --mid-rock:#5C5246;
+    --black-rock:#141210;
+    --shadow: 0 4px 14px rgba(0,0,0,0.4);
+    --deep-bubble-bg:#2F3A30;
+    --deep-bubble-border:#4A5C4D;
+    --volc-bubble-bg:#3B2A24;
+    --volc-bubble-border:#5C3F35;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#221D18;
+  --card:#2E2820;
+  --text:#F1E9DC;
+  --sub:#B6A891;
+  --border:#463C30;
+  --white-rock:#4A4238;
+  --mid-rock:#5C5246;
+  --black-rock:#141210;
+  --shadow: 0 4px 14px rgba(0,0,0,0.4);
+  --deep-bubble-bg:#2F3A30;
+  --deep-bubble-border:#4A5C4D;
+  --volc-bubble-bg:#3B2A24;
+  --volc-bubble-border:#5C3F35;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+body{
+  margin:0;
+  font-family:"Hiragino Maru Gothic ProN","Yu Gothic",sans-serif;
+  background:
+    linear-gradient(180deg, var(--bg), var(--bg));
+  color:var(--text);
+  min-height:100vh;
+  padding-bottom:40px;
+}
+header{
+  text-align:center;
+  padding:22px 14px 14px;
+}
+header h1{
+  margin:0;
+  font-size:1.5rem;
+  letter-spacing:0.05em;
+}
+header h1 .deco{opacity:0.8;}
+header p{margin:6px 0 0;color:var(--sub);font-size:0.85rem;}
+nav{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  justify-content:center;
+  padding:0 10px 14px;
+}
+nav button{
+  border:1px solid var(--border);
+  background:var(--card);
+  color:var(--text);
+  border-radius:999px;
+  padding:8px 14px;
+  font-size:0.82rem;
+  cursor:pointer;
+  transition:all .15s;
+}
+nav button.active{
+  background:var(--accent);
+  border-color:var(--accent);
+  color:#fff;
+  font-weight:bold;
+}
+main{
+  max-width:640px;
+  margin:0 auto;
+  padding:0 14px;
+}
+.tabpanel{display:none;}
+.tabpanel.active{display:block;animation:fade .25s ease;}
+@keyframes fade{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+
+.card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:16px;
+  margin-bottom:14px;
+  box-shadow:var(--shadow);
+}
+.card h2{margin:0 0 10px;font-size:1.05rem;}
+.card h3{margin:14px 0 8px;font-size:0.95rem;color:var(--accent);}
+.card p{line-height:1.75;font-size:0.92rem;margin:0 0 10px;}
+.chapter{
+  border:1px solid var(--border);
+  border-radius:14px;
+  margin-bottom:10px;
+  overflow:hidden;
+  background:var(--bg);
+}
+.chapter summary{
+  cursor:pointer;
+  list-style:none;
+  padding:12px 14px;
+  font-weight:bold;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:0.93rem;
+}
+.chapter summary::-webkit-details-marker{display:none;}
+.chapter summary::after{
+  content:"▼";
+  margin-left:auto;
+  font-size:0.7rem;
+  color:var(--sub);
+  transition:transform .2s;
+}
+.chapter[open] summary::after{transform:rotate(180deg);}
+.chapter .body{padding:0 14px 16px;}
+.chapter .body p{font-size:0.9rem;}
+
+.bubble{
+  border-radius:14px;
+  padding:10px 14px;
+  margin:8px 0;
+  font-size:0.88rem;
+  line-height:1.6;
+  max-width:88%;
+  position:relative;
+}
+.bubble.deep{background:var(--deep-bubble-bg);margin-left:auto;text-align:right;border:1px solid var(--deep-bubble-border);}
+.bubble.volc{background:var(--volc-bubble-bg);border:1px solid var(--volc-bubble-border);}
+.bubble.narr{background:transparent;border:none;color:var(--sub);font-size:0.82rem;text-align:center;margin:10px auto;max-width:100%;}
+.bubble b{color:var(--text);}
+
+.tag{
+  display:inline-block;
+  font-size:0.72rem;
+  padding:2px 8px;
+  border-radius:999px;
+  margin-right:4px;
+  color:#fff;
+}
+.tag.deep{background:var(--deep);}
+.tag.volc{background:var(--volcanic);}
+.tag.white{background:var(--mid-rock);color:#3A322A;}
+.tag.mid{background:#8A7C6C;}
+.tag.black{background:var(--black-rock);}
+
+table.matrix{width:100%;border-collapse:collapse;margin:12px 0;font-size:0.82rem;}
+table.matrix th,table.matrix td{border:1px solid var(--border);padding:8px 4px;text-align:center;}
+table.matrix th{background:var(--bg);}
+table.matrix td.rock{font-weight:bold;}
+
+.quiz-q{
+  font-size:1.05rem;
+  font-weight:bold;
+  text-align:center;
+  margin:6px 0 18px;
+  min-height:2.6em;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.choices{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+.choices button{
+  padding:14px 8px;
+  border-radius:14px;
+  border:2px solid var(--border);
+  background:var(--card);
+  color:var(--text);
+  font-size:0.9rem;
+  cursor:pointer;
+  min-height:56px;
+}
+.choices button:active{transform:scale(0.97);}
+.choices button.correct{background:var(--good);border-color:var(--good);color:#fff;}
+.choices button.wrong{background:var(--bad);border-color:var(--bad);color:#fff;}
+.choices button.dim{opacity:0.45;}
+.quiz-meta{
+  display:flex;justify-content:space-between;
+  font-size:0.78rem;color:var(--sub);margin-bottom:6px;
+}
+.feedback{
+  text-align:center;
+  min-height:2.4em;
+  font-size:0.9rem;
+  margin-top:12px;
+  font-weight:bold;
+}
+.feedback.good{color:var(--good);}
+.feedback.bad{color:var(--bad);}
+.nextbtn{
+  display:block;
+  margin:14px auto 0;
+  padding:10px 26px;
+  border-radius:999px;
+  border:none;
+  background:var(--accent);
+  color:#fff;
+  font-size:0.9rem;
+  cursor:pointer;
+}
+.toggle-row{
+  display:flex;align-items:center;justify-content:space-between;
+  font-size:0.82rem;color:var(--sub);margin-bottom:10px;
+}
+.switch{
+  position:relative;width:40px;height:22px;
+}
+.switch input{opacity:0;width:0;height:0;}
+.switch .slider{
+  position:absolute;inset:0;background:var(--border);border-radius:999px;transition:.2s;
+}
+.switch .slider::before{
+  content:"";position:absolute;width:16px;height:16px;left:3px;top:3px;
+  background:#fff;border-radius:50%;transition:.2s;
+}
+.switch input:checked + .slider{background:var(--accent);}
+.switch input:checked + .slider::before{transform:translateX(18px);}
+
+.result-title{text-align:center;font-size:1.4rem;margin:6px 0;}
+.result-score{text-align:center;font-size:2.4rem;font-weight:bold;color:var(--accent);margin:6px 0;}
+.result-sub{text-align:center;color:var(--sub);font-size:0.85rem;margin-bottom:16px;}
+
+.stat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:14px;}
+.stat-box{background:var(--bg);border:1px solid var(--border);border-radius:14px;padding:12px;text-align:center;}
+.stat-box .num{font-size:1.5rem;font-weight:bold;color:var(--accent);}
+.stat-box .lbl{font-size:0.75rem;color:var(--sub);}
+.weak-list{list-style:none;padding:0;margin:0;}
+.weak-list li{
+  display:flex;justify-content:space-between;
+  padding:8px 4px;border-bottom:1px solid var(--border);font-size:0.85rem;
+}
+.weak-list li:last-child{border-bottom:none;}
+.bar-row{margin-bottom:10px;font-size:0.82rem;}
+.bar-outer{background:var(--bg);border-radius:999px;height:10px;overflow:hidden;margin-top:4px;border:1px solid var(--border);}
+.bar-inner{height:100%;background:var(--accent);border-radius:999px;}
+.reset-btn{
+  width:100%;padding:12px;border-radius:12px;border:1px solid var(--bad);
+  background:transparent;color:var(--bad);font-size:0.85rem;margin-top:10px;cursor:pointer;
+}
+
+.rockcard{
+  display:flex;gap:10px;align-items:center;
+  padding:10px;border:1px solid var(--border);border-radius:12px;margin-bottom:8px;background:var(--bg);
+}
+.rockcard .swatch{width:38px;height:38px;border-radius:10px;flex:none;border:1px solid var(--border);}
+.rockcard .info b{display:block;font-size:0.92rem;}
+.rockcard .info span{font-size:0.76rem;color:var(--sub);}
+
+footer{text-align:center;color:var(--sub);font-size:0.72rem;padding:24px 10px 10px;}
+</style>
+</head>
+<body>
+
+<header>
+  <h1><span class="deco">⛰️</span> 岩石きょうだいクイズ <span class="deco">⛰️</span></h1>
+  <p>火成岩6兄弟のひみつを、物語とクイズでまるごと覚えよう</p>
+</header>
+
+<nav id="tabnav"></nav>
+
+<main id="main"></main>
+
+<footer>岩石きょうだいクイズ ・ 中学受験理科「火成岩」暗記アプリ</footer>
+
+<script>
+/* ===================== データモデル ===================== */
+const ROCKS = [
+  {
+    key:"kakou", name:"花崗岩", yomi:"かこうがん",
+    type:"deep", color:"white", role:"深成岩三兄弟の長男",
+    minerals:["セキエイ","チョウ石","クロウンモ"],
+    texture:"等粒状組織（大きな結晶がぎっしり）",
+    twin:"ryumon",
+    catch:"白くてキラキラ、御影石として墓石・建物の主役",
+    line:"地下でじっくり数万年！結晶をでっかく育てるのが俺の美学だ。"
+  },
+  {
+    key:"senryoku", name:"閃緑岩", yomi:"せんりょくがん",
+    type:"deep", color:"mid", role:"深成岩三兄弟の次男",
+    minerals:["チョウ石","カクセン石"],
+    texture:"等粒状組織（白黒ごま塩模様）",
+    twin:"anzan",
+    catch:"白と黒のごま塩模様、地味だけど縁の下の力持ち",
+    line:"目立たないけど、白と黒のバランスなら俺が一番だと思ってる。"
+  },
+  {
+    key:"hanrei", name:"斑れい岩", yomi:"はんれいがん",
+    type:"deep", color:"black", role:"深成岩三兄弟の三男",
+    minerals:["キ石","カンラン石","チョウ石"],
+    texture:"等粒状組織（黒くてがっしり）",
+    twin:"genbu",
+    catch:"真っ黒でがっしり体型、寡黙な力持ち",
+    line:"……しゃべるのは苦手だ。黒くて重いのが俺の強み。"
+  },
+  {
+    key:"ryumon", name:"流紋岩", yomi:"りゅうもんがん",
+    type:"volcanic", color:"white", role:"火山岩三兄弟の長男",
+    minerals:["セキエイ","チョウ石"],
+    texture:"斑状組織（ガラス質にスジ模様＝流理構造）",
+    twin:"kakou",
+    catch:"花崗岩と同じ材料なのに、大急ぎで生まれたのでガラス肌にスジ模様",
+    line:"兄ちゃんとは双子で材料は同じ！でも俺はスピード重視、噴火で一気に地上へ！"
+  },
+  {
+    key:"anzan", name:"安山岩", yomi:"あんざんがん",
+    type:"volcanic", color:"mid", role:"火山岩三兄弟の次男",
+    minerals:["チョウ石","カクセン石","キ石"],
+    texture:"斑状組織（石基の中に斑晶が点々）",
+    twin:"senryoku",
+    catch:"日本の火山に一番多い、いわば火山岩界の日本代表",
+    line:"日本列島は火山だらけ。だから俺はどこの山にもいる、いわば日本代表だ！"
+  },
+  {
+    key:"genbu", name:"玄武岩", yomi:"げんぶがん",
+    type:"volcanic", color:"black", role:"火山岩三兄弟の三男",
+    minerals:["キ石","カンラン石"],
+    texture:"斑状組織（黒くて柱状節理ができやすい）",
+    twin:"hanrei",
+    catch:"マグマそのものの黒さ、ハワイの溶岩や柱状節理で有名",
+    line:"ハワイの溶岩は俺の仲間。冷えて固まると六角形の柱になるのが自慢だ。"
+  },
+];
+const byKey = k => ROCKS.find(r=>r.key===k);
+const TYPE_LABEL = {deep:"深成岩", volcanic:"火山岩"};
+const COLOR_LABEL = {white:"白っぽい", mid:"中間", black:"黒っぽい"};
+const COLOR_SWATCH = {white:"var(--white-rock)", mid:"var(--mid-rock)", black:"var(--black-rock)"};
+
+const PRAISE = ["やったね！","さすが！","正解！かんぺき！","その調子！","よく覚えてる！","バッチリ！"];
+const CONSOLE_MSG = ["おしい！もう一回見直そう","次はいけるよ","焦らずいこう","物語をもう一度読んでみよう"];
+let lastPraise=null, lastConsole=null;
+function pickVaried(arr, last){
+  let p; do{ p = arr[Math.floor(Math.random()*arr.length)]; }while(arr.length>1 && p===last);
+  return p;
+}
+
+/* ===================== サウンド ===================== */
+let actx=null;
+function ac(){ if(!actx) actx = new (window.AudioContext||window.webkitAudioContext)(); return actx; }
+function tone(freq, start, dur, type="sine", gain=0.15){
+  const ctx=ac();
+  const o=ctx.createOscillator(), g=ctx.createGain();
+  o.type=type; o.frequency.value=freq;
+  g.gain.value=0;
+  o.connect(g); g.connect(ctx.destination);
+  const t0=ctx.currentTime+start;
+  g.gain.setValueAtTime(0,t0);
+  g.gain.linearRampToValueAtTime(gain,t0+0.02);
+  g.gain.exponentialRampToValueAtTime(0.001,t0+dur);
+  o.start(t0); o.stop(t0+dur+0.02);
+}
+function playTap(){ try{ tone(660,0,0.08,"square",0.06); }catch(e){} }
+function playCorrect(){ try{ tone(523,0,0.12); tone(659,0.1,0.12); tone(784,0.2,0.2); }catch(e){} }
+function playWrong(){ try{ tone(180,0,0.18,"sawtooth",0.08); tone(140,0.15,0.22,"sawtooth",0.08); }catch(e){} }
+function playFanfare(pct){
+  try{
+    if(pct>=90){ [523,659,784,1046].forEach((f,i)=>tone(f,i*0.12,0.25)); }
+    else if(pct>=70){ [523,659,784].forEach((f,i)=>tone(f,i*0.12,0.2)); }
+    else { tone(392,0,0.2); tone(330,0.15,0.25); }
+  }catch(e){}
+}
+
+/* ===================== 統計 (localStorage) ===================== */
+const STAT_KEY="ganseki-stats-v1";
+function loadStats(){ try{ return JSON.parse(localStorage.getItem(STAT_KEY))||{}; }catch(e){ return {}; } }
+function saveStats(s){ localStorage.setItem(STAT_KEY, JSON.stringify(s)); }
+let STATS = loadStats();
+function recordAnswer(key, ok){
+  if(!STATS[key]) STATS[key]={c:0,w:0};
+  if(ok) STATS[key].c++; else STATS[key].w++;
+  saveStats(STATS);
+}
+function isWeak(key){
+  const s=STATS[key]; if(!s) return false;
+  const total=s.c+s.w;
+  return total>0 && s.w>0 && s.w>=s.c;
+}
+function resetStats(){ STATS={}; saveStats(STATS); }
+
+/* ===================== タブ管理 ===================== */
+const TABS = [
+  {id:"story", label:"🧬 きょうだい物語"},
+  {id:"matrix", label:"🔍 分類クイズ"},
+  {id:"guess", label:"② 岩石名当てテスト"},
+  {id:"final", label:"🏆 まとめテスト"},
+  {id:"stats", label:"📊 達成度"},
+];
+let currentTab="story";
+
+function renderNav(){
+  const nav=document.getElementById("tabnav");
+  nav.innerHTML="";
+  TABS.forEach(t=>{
+    const b=document.createElement("button");
+    b.textContent=t.label;
+    b.className = t.id===currentTab ? "active":"";
+    b.onclick=()=>{ playTap(); currentTab=t.id; renderNav(); renderMain(); };
+    nav.appendChild(b);
+  });
+}
+function renderMain(){
+  const main=document.getElementById("main");
+  main.innerHTML="";
+  if(currentTab==="story") main.appendChild(renderStory());
+  if(currentTab==="matrix") main.appendChild(renderMatrixQuiz());
+  if(currentTab==="guess") main.appendChild(renderGuessQuiz());
+  if(currentTab==="final") main.appendChild(renderFinalQuiz());
+  if(currentTab==="stats") main.appendChild(renderStats());
+}
+
+/* ===================== ① きょうだい物語タブ ===================== */
+function renderStory(){
+  const wrap=document.createElement("div");
+
+  const intro=document.createElement("div");
+  intro.className="card";
+  intro.innerHTML=`
+    <h2>🌋 プロローグ：マグマ大王の6人の子</h2>
+    <p>地球のずっと奥深く、いつもグツグツ煮えたぎっている「マグマ大王」。実は大王には6人の子どもがいます。同じような材料から生まれたのに、育て方がちがうだけで、性格も見た目もまったく違う子に育ちました。</p>
+    <p>大王の育て方は2パターン。<b>①地下でじっくり数万年〜数百万年かけて冷やす</b>か、<b>②噴火で一気に地上へ飛び出させて急に冷やす</b>か。じっくり育った3人が「深成岩三兄弟」、大急ぎで生まれた3人が「火山岩三兄弟」です。</p>
+  `;
+  wrap.appendChild(intro);
+
+  const chapters=document.createElement("div");
+  chapters.className="card";
+  chapters.innerHTML=`<h2>📖 全6話：きょうだいのひみつ</h2>`;
+
+  const ch1=document.createElement("details");
+  ch1.className="chapter";
+  ch1.innerHTML=`
+    <summary>第1話　地底の三兄弟（深成岩）</summary>
+    <div class="body">
+      <p class="bubble narr">地下深くの「じっくり育成部屋」。ここで数万年〜数百万年かけて冷やされると、体の中の結晶（鉱物のつぶ）がしっかり大きく育つ。これが「<b>等粒状組織</b>」。</p>
+      <p class="bubble deep"><b>花崗岩（長男）</b>：「地下でじっくり数万年！結晶をでっかく育てるのが俺の美学だ。セキエイ・チョウ石・クロウンモの3点セットで白くキラキラ、御影石として墓石やビルの壁で活躍してるぜ。」</p>
+      <p class="bubble deep"><b>閃緑岩（次男）</b>：「目立たないけど、白と黒のバランスなら俺が一番だと思ってる。チョウ石とカクセン石で、ごま塩みたいな模様なんだ。」</p>
+      <p class="bubble deep"><b>斑れい岩（三男）</b>：「……しゃべるのは苦手だ。キ石とカンラン石とチョウ石、黒くて重いのが俺の強みだ。」</p>
+      <p class="bubble narr">3兄弟まとめて覚える語呂：「<b>かんせん（花崗＋閃緑）はんぱ（斑れい）ない深成岩</b>」</p>
+    </div>
+  `;
+  chapters.appendChild(ch1);
+
+  const ch2=document.createElement("details");
+  ch2.className="chapter";
+  ch2.innerHTML=`
+    <summary>第2話　せっかち三兄弟（火山岩）</summary>
+    <div class="body">
+      <p class="bubble narr">一方こちらは「噴火で一気に地上へ飛び出す」育て方をされた3人。急に冷やされるので結晶が育つ時間がなく、肌はガラスのようになめらか（<b>石基</b>）で、ところどころに小さな結晶（<b>斑晶</b>）が点々と浮く「<b>斑状組織</b>」になる。</p>
+      <p class="bubble volc"><b>流紋岩（長男）</b>：「兄ちゃん（花崗岩）とは双子で材料は同じ！でも俺はスピード重視、噴火で一気に地上へ！ガラス質の肌にスジ模様（流理構造）が自慢だ。」</p>
+      <p class="bubble volc"><b>安山岩（次男）</b>：「日本列島は火山だらけ。だから俺はどこの山にもいる、いわば火山岩界の日本代表だ！」</p>
+      <p class="bubble volc"><b>玄武岩（三男）</b>：「ハワイの溶岩は俺の仲間。冷えて固まると六角形の柱（柱状節理）になるのが自慢だ。」</p>
+      <p class="bubble narr">色の並びは「<b>りゅう（流紋）あん（安山）げん（玄武）</b>」＝白→中間→黒の順で覚えよう。</p>
+    </div>
+  `;
+  chapters.appendChild(ch2);
+
+  const ch3=document.createElement("details");
+  ch3.className="chapter";
+  ch3.innerHTML=`
+    <summary>第3話　双子なのに、なぜ違う姿に？</summary>
+    <div class="body">
+      <p class="bubble narr">実は6兄弟は3組の「双子」。同じ材料（成分）から生まれているのに、育ち方の速さで見た目がまるで違う双子になった。</p>
+      <table class="matrix">
+        <tr><th></th><th>深成岩（じっくり）</th><th>火山岩（大急ぎ）</th></tr>
+        <tr><td>白っぽい</td><td class="rock">花崗岩</td><td class="rock">流紋岩</td></tr>
+        <tr><td>中間</td><td class="rock">閃緑岩</td><td class="rock">安山岩</td></tr>
+        <tr><td>黒っぽい</td><td class="rock">斑れい岩</td><td class="rock">玄武岩</td></tr>
+      </table>
+      <p class="bubble deep"><b>花崗岩</b>：「同じ材料でも、じっくり育てば結晶は大きく、粒がそろった等粒状組織になる。」</p>
+      <p class="bubble volc"><b>流紋岩</b>：「同じ材料でも、急いで生まれれば結晶が育つ時間がない。だからガラスっぽい石基に、小さな斑晶がちらほらの斑状組織になるんだ。」</p>
+      <p class="bubble narr">つまり「組織のちがい」＝「冷える速さのちがい」。材料（色・鉱物）が同じでも育て方で見た目が変わる、これが双子の秘密。</p>
+    </div>
+  `;
+  chapters.appendChild(ch3);
+
+  const ch4=document.createElement("details");
+  ch4.className="chapter";
+  ch4.innerHTML=`
+    <summary>第4話　色のひみつ（鉱物の話）</summary>
+    <div class="body">
+      <p class="bubble narr">なぜ花崗岩・流紋岩ペアは白く、玄武岩・斑れい岩ペアは黒いのか。答えは中に入っている鉱物の種類。</p>
+      <p class="bubble narr"><b>無色鉱物</b>（セキエイ・チョウ石）が多い＝白っぽい体質。<b>有色鉱物</b>（クロウンモ・カクセン石・キ石・カンラン石）が多い＝黒っぽい体質。中間の閃緑岩・安山岩ペアはその両方をバランスよく持っている。</p>
+      <table class="matrix">
+        <tr><th>色</th><th>ペア</th><th>多い鉱物</th></tr>
+        <tr><td>白</td><td>花崗岩・流紋岩</td><td>セキエイ・チョウ石</td></tr>
+        <tr><td>中間</td><td>閃緑岩・安山岩</td><td>チョウ石・カクセン石</td></tr>
+        <tr><td>黒</td><td>斑れい岩・玄武岩</td><td>キ石・カンラン石</td></tr>
+      </table>
+    </div>
+  `;
+  chapters.appendChild(ch4);
+
+  const ch5=document.createElement("details");
+  ch5.className="chapter";
+  ch5.innerHTML=`
+    <summary>第5話　きょうだい大集合（まとめ）</summary>
+    <div class="body">
+      <p class="bubble narr">6兄弟が縦横の表で仲直り。「でき方（縦）×色（横）」の2つの軸さえ覚えれば、どの岩石も迷わず言い当てられる。</p>
+      <p class="bubble narr">語呂まとめ：深成岩は「<b>かんせん（花崗＋閃緑）はんぱ（斑れい）ない</b>」／火山岩は「<b>りゅう・あん・げん</b>」で白→中間→黒の順。</p>
+      <p class="bubble narr">組織のちがいは「<b>じっくり＝等粒状、大急ぎ＝斑状</b>」。この4つの合言葉があれば火成岩はもう怖くない！</p>
+    </div>
+  `;
+  chapters.appendChild(ch5);
+
+  wrap.appendChild(chapters);
+
+  const gallery=document.createElement("div");
+  gallery.className="card";
+  gallery.innerHTML=`<h2>🪨 岩石図鑑</h2>`;
+  ROCKS.forEach(r=>{
+    const row=document.createElement("div");
+    row.className="rockcard";
+    row.innerHTML=`
+      <div class="swatch" style="background:${COLOR_SWATCH[r.color]}"></div>
+      <div class="info">
+        <b>${r.name}（${r.yomi}）</b>
+        <span><span class="tag ${r.type}">${TYPE_LABEL[r.type]}</span><span class="tag ${r.color}">${COLOR_LABEL[r.color]}</span></span>
+        <span>${r.catch}</span>
+      </div>
+    `;
+    gallery.appendChild(row);
+  });
+  wrap.appendChild(gallery);
+
+  return wrap;
+}
+
+/* ===================== ② 分類クイズ（2軸マトリクス） ===================== */
+let matrixState = newQuizState();
+function newQuizState(){ return {qn:0, correct:0, total:10, weakOnly:false, current:null, answered:false}; }
+
+function matrixOptionLabel(type,color){ return `${TYPE_LABEL[type]}・${COLOR_LABEL[color]}`; }
+
+function renderMatrixQuiz(){
+  return renderGenericQuiz({
+    state: matrixState,
+    title: "🔍 分類クイズ（でき方×色）",
+    desc: "岩石の名前を見て、「でき方」と「色」の正しい組み合わせを当てよう。",
+    statPrefix: "mat",
+    buildQuestion(weakOnly){
+      let pool = ROCKS;
+      if(weakOnly) pool = ROCKS.filter(r=>isWeak("mat|"+r.key));
+      if(pool.length===0) pool = ROCKS;
+      const rock = pool[Math.floor(Math.random()*pool.length)];
+      const correctLabel = matrixOptionLabel(rock.type, rock.color);
+      const allLabels = ROCKS.map(r=>matrixOptionLabel(r.type,r.color)).filter((v,i,a)=>a.indexOf(v)===i);
+      let wrongs = allLabels.filter(l=>l!==correctLabel);
+      wrongs = shuffle(wrongs).slice(0,3);
+      const choices = shuffle([correctLabel, ...wrongs]);
+      return {
+        statKey: "mat|"+rock.key,
+        question: `「${rock.name}」は、でき方と色でいうと？`,
+        choices,
+        correct: correctLabel,
+        explain: `${rock.name}は${rock.role}。${TYPE_LABEL[rock.type]}で${COLOR_LABEL[rock.color]}な岩石です。`,
+      };
+    }
+  });
+}
+
+/* ===================== ③ 岩石名当てテスト ===================== */
+let guessState = newQuizState();
+function renderGuessQuiz(){
+  return renderGenericQuiz({
+    state: guessState,
+    title: "② 岩石名当てテスト",
+    desc: "組織・色・鉱物のヒントから、正しい岩石名を当てよう。",
+    statPrefix: "guess",
+    buildQuestion(weakOnly){
+      let pool = ROCKS;
+      if(weakOnly) pool = ROCKS.filter(r=>isWeak("guess|"+r.key));
+      if(pool.length===0) pool = ROCKS;
+      const rock = pool[Math.floor(Math.random()*pool.length)];
+      const hints = [
+        `つくり：${rock.texture}`,
+        `色：${COLOR_LABEL[rock.color]}`,
+        `主な鉱物：${rock.minerals.join("・")}`,
+      ];
+      const wrongPool = ROCKS.filter(r=>r.key!==rock.key).map(r=>r.name);
+      const wrongs = shuffle(wrongPool).slice(0,3);
+      const choices = shuffle([rock.name, ...wrongs]);
+      return {
+        statKey: "guess|"+rock.key,
+        question: hints.join("\n"),
+        multiline:true,
+        choices,
+        correct: rock.name,
+        explain: `${rock.name}（${rock.role}）：${rock.catch}`,
+      };
+    }
+  });
+}
+
+/* ===================== ④ まとめテスト ===================== */
+let finalState = newQuizState();
+finalState.total = 16;
+function renderFinalQuiz(){
+  return renderGenericQuiz({
+    state: finalState,
+    title: "🏆 まとめテスト",
+    desc: "分類クイズと岩石名当てテストをランダムミックス。全16問！",
+    statPrefix: "final",
+    isFinal:true,
+    buildQuestion(weakOnly){
+      const mode = Math.random()<0.5 ? "matrix":"guess";
+      let pool = ROCKS;
+      if(weakOnly) pool = ROCKS.filter(r=>isWeak("final|"+r.key));
+      if(pool.length===0) pool = ROCKS;
+      const rock = pool[Math.floor(Math.random()*pool.length)];
+      if(mode==="matrix"){
+        const correctLabel = matrixOptionLabel(rock.type, rock.color);
+        const allLabels = ROCKS.map(r=>matrixOptionLabel(r.type,r.color)).filter((v,i,a)=>a.indexOf(v)===i);
+        let wrongs = shuffle(allLabels.filter(l=>l!==correctLabel)).slice(0,3);
+        return {
+          statKey: "final|"+rock.key,
+          question: `「${rock.name}」は、でき方と色でいうと？`,
+          choices: shuffle([correctLabel, ...wrongs]),
+          correct: correctLabel,
+          explain: `${rock.name}は${TYPE_LABEL[rock.type]}で${COLOR_LABEL[rock.color]}。`,
+        };
+      } else {
+        const hints = [
+          `つくり：${rock.texture}`,
+          `色：${COLOR_LABEL[rock.color]}`,
+          `主な鉱物：${rock.minerals.join("・")}`,
+        ];
+        const wrongs = shuffle(ROCKS.filter(r=>r.key!==rock.key).map(r=>r.name)).slice(0,3);
+        return {
+          statKey: "final|"+rock.key,
+          question: hints.join("\n"),
+          multiline:true,
+          choices: shuffle([rock.name, ...wrongs]),
+          correct: rock.name,
+          explain: `${rock.name}（${rock.role}）：${rock.catch}`,
+        };
+      }
+    }
+  });
+}
+
+/* ===================== 汎用クイズ描画エンジン ===================== */
+function shuffle(arr){
+  const a=[...arr];
+  for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
+  return a;
+}
+
+function renderGenericQuiz({state, title, desc, buildQuestion, isFinal}){
+  const wrap=document.createElement("div");
+  const card=document.createElement("div");
+  card.className="card";
+
+  if(state.qn >= state.total){
+    // 結果画面
+    const pct = Math.round((state.correct/state.total)*100);
+    let titleTxt = "けっか";
+    let subTxt = "";
+    if(pct>=90){ titleTxt="🏆 岩石マスター！"; subTxt="6兄弟のことを完璧に理解してるね！"; }
+    else if(pct>=70){ titleTxt="🎉 よくできました"; subTxt="あと少しで岩石マスターだ！"; }
+    else if(pct>=50){ titleTxt="💪 もうひとがんばり"; subTxt="物語をもう一度読むとグッと伸びるよ"; }
+    else { titleTxt="🌱 これから！"; subTxt="第1話からじっくり読み直してみよう"; }
+    card.innerHTML=`
+      <p class="result-title">${titleTxt}</p>
+      <p class="result-score">${state.correct} / ${state.total}</p>
+      <p class="result-sub">正答率 ${pct}%　${subTxt}</p>
+    `;
+    const retry=document.createElement("button");
+    retry.className="nextbtn";
+    retry.textContent="もう一度挑戦する";
+    retry.onclick=()=>{ playTap(); Object.assign(state,newQuizState()); if(isFinal) state.total=16; renderMain(); };
+    card.appendChild(retry);
+    playFanfare(pct);
+    wrap.appendChild(card);
+    return wrap;
+  }
+
+  if(!state.current || state.answered===undefined) state.answered=false;
+  if(!state.current) state.current = buildQuestion(state.weakOnly);
+
+  card.innerHTML=`<h2>${title}</h2><p style="font-size:0.85rem;color:var(--sub);margin-top:-4px;">${desc}</p>`;
+
+  const toggleRow=document.createElement("div");
+  toggleRow.className="toggle-row";
+  toggleRow.innerHTML=`
+    <span>🔁 苦手だけ出題</span>
+    <label class="switch"><input type="checkbox" ${state.weakOnly?"checked":""}><span class="slider"></span></label>
+  `;
+  toggleRow.querySelector("input").onchange=(e)=>{
+    state.weakOnly = e.target.checked;
+    state.current = null;
+    renderMain();
+  };
+  card.appendChild(toggleRow);
+
+  const meta=document.createElement("div");
+  meta.className="quiz-meta";
+  meta.innerHTML=`<span>問題 ${state.qn+1} / ${state.total}</span><span>正解 ${state.correct}</span>`;
+  card.appendChild(meta);
+
+  const q=state.current;
+  const qEl=document.createElement("div");
+  qEl.className="quiz-q";
+  qEl.style.whiteSpace = q.multiline ? "pre-line":"normal";
+  qEl.textContent=q.question;
+  card.appendChild(qEl);
+
+  const choicesEl=document.createElement("div");
+  choicesEl.className="choices";
+  const feedback=document.createElement("div");
+  feedback.className="feedback";
+
+  q.choices.forEach(choice=>{
+    const b=document.createElement("button");
+    b.textContent=choice;
+    b.onclick=()=>{
+      if(state.answered) return;
+      state.answered=true;
+      const ok = choice===q.correct;
+      recordAnswer(q.statKey, ok);
+      [...choicesEl.children].forEach(btn=>{
+        if(btn.textContent===q.correct) btn.classList.add("correct");
+        else if(btn===b) btn.classList.add("wrong");
+        else btn.classList.add("dim");
+      });
+      if(ok){
+        state.correct++;
+        playCorrect();
+        feedback.className="feedback good";
+        feedback.textContent = pickVaried(PRAISE,lastPraise); lastPraise=feedback.textContent;
+      } else {
+        playWrong();
+        feedback.className="feedback bad";
+        feedback.textContent = pickVaried(CONSOLE_MSG,lastConsole)+"　正解："+q.correct; lastConsole=feedback.textContent;
+      }
+      const explainP=document.createElement("p");
+      explainP.style.cssText="text-align:center;font-size:0.8rem;color:var(--sub);margin-top:6px;";
+      explainP.textContent=q.explain;
+      feedback.appendChild(document.createElement("br"));
+      feedback.appendChild(explainP);
+
+      const next=document.createElement("button");
+      next.className="nextbtn";
+      next.textContent = (state.qn+1>=state.total) ? "けっかを見る" : "つぎの問題へ";
+      next.onclick=()=>{
+        playTap();
+        state.qn++;
+        state.current=null;
+        state.answered=false;
+        renderMain();
+      };
+      card.appendChild(next);
+    };
+    choicesEl.appendChild(b);
+  });
+
+  card.appendChild(choicesEl);
+  card.appendChild(feedback);
+  wrap.appendChild(card);
+  return wrap;
+}
+
+/* ===================== ⑤ 達成度 ===================== */
+function renderStats(){
+  const wrap=document.createElement("div");
+
+  let totalC=0, totalW=0, weakCount=0;
+  const weakItems=[];
+  Object.keys(STATS).forEach(k=>{
+    const s=STATS[k];
+    totalC+=s.c; totalW+=s.w;
+    if(isWeak(k)){
+      weakCount++;
+      const parts=k.split("|");
+      const rock = byKey(parts[1]);
+      weakItems.push({label: rock?rock.name:parts[1], mode:parts[0], w:s.w, c:s.c});
+    }
+  });
+  const total = totalC+totalW;
+  const pct = total>0 ? Math.round((totalC/total)*100) : 0;
+
+  const summary=document.createElement("div");
+  summary.className="card";
+  summary.innerHTML=`
+    <h2>📊 達成度</h2>
+    <div class="stat-grid">
+      <div class="stat-box"><div class="num">${total}</div><div class="lbl">総解答数</div></div>
+      <div class="stat-box"><div class="num">${pct}%</div><div class="lbl">正答率</div></div>
+      <div class="stat-box"><div class="num">${weakCount}</div><div class="lbl">苦手項目数</div></div>
+      <div class="stat-box"><div class="num">${ROCKS.length}</div><div class="lbl">登場する岩石</div></div>
+    </div>
+  `;
+  wrap.appendChild(summary);
+
+  if(weakItems.length){
+    const weakCard=document.createElement("div");
+    weakCard.className="card";
+    weakCard.innerHTML=`<h2>🔥 苦手ランキング</h2>`;
+    const list=document.createElement("ul");
+    list.className="weak-list";
+    weakItems.sort((a,b)=>(b.w-b.c)-(a.w-a.c));
+    weakItems.forEach(it=>{
+      const li=document.createElement("li");
+      const modeLabel = it.mode==="mat"?"分類":(it.mode==="guess"?"名前当て":"まとめ");
+      li.innerHTML=`<span>${it.label}（${modeLabel}）</span><span>正${it.c} / 誤${it.w}</span>`;
+      list.appendChild(li);
+    });
+    weakCard.appendChild(list);
+    wrap.appendChild(weakCard);
+  }
+
+  const byRockCard=document.createElement("div");
+  byRockCard.className="card";
+  byRockCard.innerHTML=`<h2>🪨 岩石別の達成度</h2>`;
+  ROCKS.forEach(r=>{
+    let c=0,w=0;
+    ["mat","guess","final"].forEach(prefix=>{
+      const s=STATS[prefix+"|"+r.key];
+      if(s){ c+=s.c; w+=s.w; }
+    });
+    const t=c+w;
+    const p = t>0 ? Math.round((c/t)*100):0;
+    const row=document.createElement("div");
+    row.className="bar-row";
+    row.innerHTML=`
+      <div style="display:flex;justify-content:space-between;">
+        <span>${r.name}</span><span style="color:var(--sub);">${t>0?p+"%":"未挑戦"}</span>
+      </div>
+      <div class="bar-outer"><div class="bar-inner" style="width:${p}%;"></div></div>
+    `;
+    byRockCard.appendChild(row);
+  });
+  wrap.appendChild(byRockCard);
+
+  const resetCard=document.createElement("div");
+  resetCard.className="card";
+  const resetBtn=document.createElement("button");
+  resetBtn.className="reset-btn";
+  resetBtn.textContent="記録をリセット";
+  let confirming=false;
+  resetBtn.onclick=()=>{
+    if(!confirming){
+      confirming=true;
+      resetBtn.textContent="もう一度押すとリセットされます";
+      setTimeout(()=>{ confirming=false; resetBtn.textContent="記録をリセット"; }, 3000);
+    } else {
+      resetStats();
+      confirming=false;
+      renderMain();
+    }
+  };
+  resetCard.appendChild(resetBtn);
+  wrap.appendChild(resetCard);
+
+  return wrap;
+}
+
+/* ===================== 初期化 ===================== */
+renderNav();
+renderMain();
+
+if("serviceWorker" in navigator){
+  window.addEventListener("load", ()=>{
+    navigator.serviceWorker.register("sw.js").catch(()=>{});
+  });
+}
+</script>
+</body>
+</html>
