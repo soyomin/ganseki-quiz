@@ -128,6 +128,12 @@ ganseki-quiz/
 - `manifest.json`: `display: standalone`、テーマカラー`#B0764A`
 - `sw.js`: install時に主要ファイルをキャッシュ、fetch時はキャッシュ優先＋
   バックグラウンド更新
+- iOSでホーム画面に追加してダークモード（夜間）で開くと、`<html>`に
+  背景色指定がないためスクロールのバウンス部分や画面端が黒く抜けて
+  見える不具合があった（2026-08-13）。`html`にも`background:var(--bg)`
+  と`overscroll-behavior-y:none`を指定して解消。あわせて
+  `apple-mobile-web-app-capable`・`apple-mobile-web-app-status-bar-style`
+  （black-translucent）を追加し、ステータスバー周りの表示も安定させた。
 - GitHubアカウント `soyomin` で管理。コミットは
   `300474778+soyomin@users.noreply.github.com`（本名非公開）のみを使用する運用
 - GitHub Pages（`main`ブランチ / ルート）で公開

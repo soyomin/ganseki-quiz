@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <meta name="theme-color" content="#B0764A">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>岩石きょうだいクイズ</title>
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="icons/favicon.png">
@@ -63,14 +65,19 @@
   --volc-bubble-border:#5C3F35;
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{
+  background:var(--bg);
+  height:100%;
+  overscroll-behavior-y:none;
+}
 body{
   margin:0;
   font-family:"Hiragino Maru Gothic ProN","Yu Gothic",sans-serif;
-  background:
-    linear-gradient(180deg, var(--bg), var(--bg));
+  background:var(--bg);
   color:var(--text);
-  min-height:100vh;
+  min-height:100%;
   padding-bottom:40px;
+  overscroll-behavior-y:none;
 }
 header{
   text-align:center;
