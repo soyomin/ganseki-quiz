@@ -320,7 +320,7 @@ footer{text-align:center;color:var(--sub);font-size:0.72rem;padding:24px 10px 10
 /* ===================== データモデル ===================== */
 const ROCKS = [
   {
-    key:"kakou", name:"花崗岩", yomi:"かこうがん",
+    key:"kakou", name:"カコウ岩", yomi:"かこうがん",
     type:"deep", color:"white", role:"深成岩三兄弟の長男",
     minerals:["セキエイ","チョウ石","クロウンモ"],
     texture:"等粒状組織（大きな結晶がぎっしり）",
@@ -329,7 +329,7 @@ const ROCKS = [
     line:"地下でじっくり数万年！結晶をでっかく育てるのが俺の美学だ。"
   },
   {
-    key:"senryoku", name:"閃緑岩", yomi:"せんりょくがん",
+    key:"senryoku", name:"センリョク岩", yomi:"せんりょくがん",
     type:"deep", color:"mid", role:"深成岩三兄弟の次男",
     minerals:["チョウ石","カクセン石"],
     texture:"等粒状組織（白黒ごま塩模様）",
@@ -338,7 +338,7 @@ const ROCKS = [
     line:"目立たないけど、白と黒のバランスなら俺が一番だと思ってる。"
   },
   {
-    key:"hanrei", name:"斑れい岩", yomi:"はんれいがん",
+    key:"hanrei", name:"ハンレイ岩", yomi:"はんれいがん",
     type:"deep", color:"black", role:"深成岩三兄弟の三男",
     minerals:["キ石","カンラン石","チョウ石"],
     texture:"等粒状組織（黒くてがっしり）",
@@ -347,16 +347,16 @@ const ROCKS = [
     line:"……しゃべるのは苦手だ。黒くて重いのが俺の強み。"
   },
   {
-    key:"ryumon", name:"流紋岩", yomi:"りゅうもんがん",
+    key:"ryumon", name:"リュウモン岩", yomi:"りゅうもんがん",
     type:"volcanic", color:"white", role:"火山岩三兄弟の長男",
     minerals:["セキエイ","チョウ石"],
     texture:"斑状組織（ガラス質にスジ模様＝流理構造）",
     twin:"kakou",
-    catch:"花崗岩と同じ材料なのに、大急ぎで生まれたのでガラス肌にスジ模様",
+    catch:"カコウ岩と同じ材料なのに、大急ぎで生まれたのでガラス肌にスジ模様",
     line:"兄ちゃんとは双子で材料は同じ！でも俺はスピード重視、噴火で一気に地上へ！"
   },
   {
-    key:"anzan", name:"安山岩", yomi:"あんざんがん",
+    key:"anzan", name:"アンザン岩", yomi:"あんざんがん",
     type:"volcanic", color:"mid", role:"火山岩三兄弟の次男",
     minerals:["チョウ石","カクセン石","キ石"],
     texture:"斑状組織（石基の中に斑晶が点々）",
@@ -365,7 +365,7 @@ const ROCKS = [
     line:"日本列島は火山だらけ。だから俺はどこの山にもいる、いわば日本代表だ！"
   },
   {
-    key:"genbu", name:"玄武岩", yomi:"げんぶがん",
+    key:"genbu", name:"ゲンブ岩", yomi:"げんぶがん",
     type:"volcanic", color:"black", role:"火山岩三兄弟の三男",
     minerals:["キ石","カンラン石"],
     texture:"斑状組織（黒くて柱状節理ができやすい）",
@@ -379,6 +379,24 @@ const TYPE_LABEL = {deep:"深成岩", volcanic:"火山岩"};
 const COLOR_LABEL = {white:"白っぽい", mid:"中間", black:"黒っぽい"};
 const COLOR_SWATCH = {white:"var(--white-rock)", mid:"var(--mid-rock)", black:"var(--black-rock)"};
 const FACE_INK = {white:"var(--text)", mid:"var(--text)", black:"#F5F1E7"};
+
+const MAGMA_GROUPS = {
+  white: {
+    label:"リュウモン岩系（白っぽい）", viscosity:"強い（ねばねば）",
+    shape:"ドーム状", eruption:"爆発的で激しい噴火",
+    examples:["有珠山（北海道）","雲仙普賢岳（長崎県）","昭和新山（北海道）"],
+  },
+  mid: {
+    label:"アンザン岩系（中間）", viscosity:"中くらい",
+    shape:"円すい形（噴出物が積み重なる）", eruption:"爆発と溶岩流をくり返す",
+    examples:["富士山（静岡県・山梨県）","桜島（鹿児島県）","浅間山（群馬県・長野県）"],
+  },
+  black: {
+    label:"ゲンブ岩系（黒っぽい）", viscosity:"弱い（さらさら）",
+    shape:"傾斜がゆるい（溶岩がうすく広がる）", eruption:"比較的おだやか",
+    examples:["キラウェア火山（アメリカ・ハワイ州）","※日本にはこのタイプの火山はほぼ見られない"],
+  },
+};
 
 function svgFace(rock, size){
   const ink = FACE_INK[rock.color];
@@ -565,16 +583,16 @@ function renderStory(){
     <summary>第1話　地上でばったり、なわばり争い</summary>
     <div class="body">
       <p class="bubble narr">長い長い年月がすぎ、大地がぐぐっと持ち上がり、雨と風が地面をけずって——地下深くで眠っていた深成岩三兄弟が、はじめて地上に顔を出しました。</p>
-      <p class="bubble deep"><b>花崗岩</b>：「ふむ。ここが地上か。諸君、行儀よく整列。われら深成岩、堂々と参ろう」</p>
-      <p class="bubble deep"><b>閃緑岩</b>：「……ぼくは目立たなくていいけどね」</p>
-      <p class="bubble deep"><b>斑れい岩</b>：「…………ん」</p>
+      <p class="bubble deep"><b>カコウ岩</b>：「ふむ。ここが地上か。諸君、行儀よく整列。われら深成岩、堂々と参ろう」</p>
+      <p class="bubble deep"><b>センリョク岩</b>：「……ぼくは目立たなくていいけどね」</p>
+      <p class="bubble deep"><b>ハンレイ岩</b>：「…………ん」</p>
       <p class="bubble narr">そこへ、溶岩の上をかけてくる3つの影。</p>
-      <p class="bubble volc"><b>流紋岩</b>：「ちょっとちょっとちょっと！　だれ！？　地上はぼくら火山岩のなわばりだよ！　ぼくら噴火で生まれた、正真正銘のスピード岩石なんだから！」</p>
-      <p class="bubble volc"><b>安山岩</b>：「そうだそうだ！　日本の火山はほとんどオレでできてる。火山岩界の日本代表、安山岩とは俺のことよ！」</p>
-      <p class="bubble volc"><b>玄武岩</b>：「ガハハ！　ハワイの溶岩といえばオレ！　冷えて固まりゃ六角形の柱、柱状節理！　かっこいいだろ！」</p>
-      <p class="bubble deep"><b>花崗岩</b>：「騒がしいな……。地上に出るのに数百万年かけた私たちこそ、本物の岩石だと思うが？　私など御影石と呼ばれ、墓石やビルの壁に選ばれる身だ」</p>
-      <p class="bubble volc"><b>流紋岩</b>：「数百万年！？　おっそ！　ぼくなんか噴火して一瞬で固まったね！」</p>
-      <p class="bubble deep"><b>花崗岩</b>：「よろしい。ならば勝負だ。どちらが"本物の岩石"か——」</p>
+      <p class="bubble volc"><b>リュウモン岩</b>：「ちょっとちょっとちょっと！　だれ！？　地上はぼくら火山岩のなわばりだよ！　ぼくら噴火で生まれた、正真正銘のスピード岩石なんだから！」</p>
+      <p class="bubble volc"><b>アンザン岩</b>：「そうだそうだ！　日本の火山はほとんどオレでできてる。火山岩界の日本代表、アンザン岩とは俺のことよ！」</p>
+      <p class="bubble volc"><b>ゲンブ岩</b>：「ガハハ！　ハワイの溶岩といえばオレ！　冷えて固まりゃ六角形の柱、柱状節理！　かっこいいだろ！」</p>
+      <p class="bubble deep"><b>カコウ岩</b>：「騒がしいな……。地上に出るのに数百万年かけた私たちこそ、本物の岩石だと思うが？　私など御影石と呼ばれ、墓石やビルの壁に選ばれる身だ」</p>
+      <p class="bubble volc"><b>リュウモン岩</b>：「数百万年！？　おっそ！　ぼくなんか噴火して一瞬で固まったね！」</p>
+      <p class="bubble deep"><b>カコウ岩</b>：「よろしい。ならば勝負だ。どちらが"本物の岩石"か——」</p>
     </div>
   `;
   chapters.appendChild(ch1);
@@ -586,9 +604,9 @@ function renderStory(){
     <div class="body">
       <p class="bubble narr">勝負その1は「からだのつくり」。ものしりのフクロウ博士が、大きな虫めがねでみんなを順番にのぞきます。</p>
       <p class="bubble sensei"><b>博士</b>：「ホッホウ。深成岩の3人は……見事じゃ。大きな結晶が、すきまなくぎっしり。地下でじっくり冷えたから、結晶が育つ時間がたっぷりあったのじゃな。これを<b>等粒状組織</b>という」</p>
-      <p class="bubble deep"><b>花崗岩</b>：「ふふ、じっくりは裏切らない」</p>
+      <p class="bubble deep"><b>カコウ岩</b>：「ふふ、じっくりは裏切らない」</p>
       <p class="bubble sensei"><b>博士</b>：「次、火山岩の3人……おや？　こまかいガラス質の<b>石基</b>の中に、小さな結晶の<b>斑晶</b>がぽつぽつ。急に冷えて、結晶が育つ時間がなかったのじゃ。これを<b>斑状組織</b>という」</p>
-      <p class="bubble volc"><b>流紋岩</b>：「え、ぼくたち、結晶……育ってないの？　このスジ模様（流理構造）、おしゃれだと思ってたのに……」</p>
+      <p class="bubble volc"><b>リュウモン岩</b>：「え、ぼくたち、結晶……育ってないの？　このスジ模様（流理構造）、おしゃれだと思ってたのに……」</p>
       <p class="bubble sensei"><b>博士</b>：「どちらが上でも下でもない。冷え方がちがうだけじゃよ。……それより、気づかんか？　おぬしら、顔がそっくりじゃぞ」</p>
       <p class="bubble narr">6人「「「「「「……え？」」」」」」</p>
     </div>
@@ -601,21 +619,21 @@ function renderStory(){
     <summary>第3話　色をならべたら——双子！？</summary>
     <div class="body">
       <p class="bubble sensei"><b>博士</b>：「白っぽい順に、ならんでみい」</p>
-      <p class="bubble narr">白っぽい花崗岩のとなりに、白っぽい流紋岩。中間色の閃緑岩のとなりに、中間色の安山岩。黒い斑れい岩のとなりに、黒い玄武岩。</p>
+      <p class="bubble narr">白っぽいカコウ岩のとなりに、白っぽいリュウモン岩。中間色のセンリョク岩のとなりに、中間色のアンザン岩。黒いハンレイ岩のとなりに、黒いゲンブ岩。</p>
       <table class="matrix">
         <tr><th></th><th>深成岩（じっくり）</th><th>火山岩（大急ぎ）</th></tr>
-        <tr><td>白っぽい</td><td class="rock">花崗岩</td><td class="rock">流紋岩</td></tr>
-        <tr><td>中間</td><td class="rock">閃緑岩</td><td class="rock">安山岩</td></tr>
-        <tr><td>黒っぽい</td><td class="rock">斑れい岩</td><td class="rock">玄武岩</td></tr>
+        <tr><td>白っぽい</td><td class="rock">カコウ岩</td><td class="rock">リュウモン岩</td></tr>
+        <tr><td>中間</td><td class="rock">センリョク岩</td><td class="rock">アンザン岩</td></tr>
+        <tr><td>黒っぽい</td><td class="rock">ハンレイ岩</td><td class="rock">ゲンブ岩</td></tr>
       </table>
-      <p class="bubble volc"><b>安山岩</b>：「う、うそだろ……閃緑岩、おまえ、オレと同じ色……」</p>
-      <p class="bubble deep"><b>閃緑岩</b>：「……きみもぼくも、チョウ石にカクセン石。中身までいっしょだ」</p>
+      <p class="bubble volc"><b>アンザン岩</b>：「う、うそだろ……センリョク岩、おまえ、オレと同じ色……」</p>
+      <p class="bubble deep"><b>センリョク岩</b>：「……きみもぼくも、チョウ石にカクセン石。中身までいっしょだ」</p>
       <p class="bubble sensei"><b>博士</b>：「ホッホウ。色のひみつは<b>鉱物</b>じゃ。白っぽい2人はセキエイ・チョウ石——<b>無色鉱物</b>が中心。黒っぽい2人はキ石・カンラン石——<b>有色鉱物</b>が中心。有色鉱物が多いほど黒くなるのじゃ」</p>
-      <p class="bubble volc"><b>玄武岩</b>：「じゃあオレと斑れい岩は、キ石とカンラン石の……」</p>
-      <p class="bubble deep"><b>斑れい岩</b>：「…………双子、だ」</p>
-      <p class="bubble volc"><b>玄武岩</b>：「し、しゃべった——！！」</p>
-      <p class="bubble volc"><b>流紋岩</b>：「つまりぼくと花崗岩は、同じ材料で……冷え方だけがちがう……」</p>
-      <p class="bubble deep"><b>花崗岩</b>：「地下でじっくり冷えれば、私。噴火で急に冷えれば、きみ。……勝負など、はじめから意味がなかったのだな」</p>
+      <p class="bubble volc"><b>ゲンブ岩</b>：「じゃあオレとハンレイ岩は、キ石とカンラン石の……」</p>
+      <p class="bubble deep"><b>ハンレイ岩</b>：「…………双子、だ」</p>
+      <p class="bubble volc"><b>ゲンブ岩</b>：「し、しゃべった——！！」</p>
+      <p class="bubble volc"><b>リュウモン岩</b>：「つまりぼくとカコウ岩は、同じ材料で……冷え方だけがちがう……」</p>
+      <p class="bubble deep"><b>カコウ岩</b>：「地下でじっくり冷えれば、私。噴火で急に冷えれば、きみ。……勝負など、はじめから意味がなかったのだな」</p>
     </div>
   `;
   chapters.appendChild(ch3);
@@ -629,8 +647,8 @@ function renderStory(){
       <p class="bubble king">大王：「気づいたか、わが子らよ。おまえたちは3組の双子。じっくり組と、大急ぎ組。どちらもわしの自慢の子じゃ！」</p>
       <p class="bubble narr">6人は手をつなぎ、声をそろえて歌います。</p>
       <p class="bubble chant">♪ かんせん（花崗・閃緑）はんぱ（斑れい）ない、深成岩！<br>♪ りゅう（流紋）・あん（安山）・げん（玄武）、白から黒へ、火山岩！</p>
-      <p class="bubble deep"><b>花崗岩</b>：「じっくり育てば等粒状」</p>
-      <p class="bubble volc"><b>流紋岩</b>：「急いで固まりゃ斑状さ！」</p>
+      <p class="bubble deep"><b>カコウ岩</b>：「じっくり育てば等粒状」</p>
+      <p class="bubble volc"><b>リュウモン岩</b>：「急いで固まりゃ斑状さ！」</p>
       <p class="bubble chant">全員：「色は鉱物、白・中間・黒！　ぼくらマグマ大王の、岩石きょうだい！」</p>
       <p class="bubble narr">こうして6人は、世界のどこかで石ころを見つけるたび「これはどっちの兄弟かな？」とみんなに考えてもらえる、なかよしきょうだいになりましたとさ。</p>
       <p class="bubble narr">——さあ、次はきみの番。クイズで6人を見分けられるかな？</p>
@@ -639,6 +657,23 @@ function renderStory(){
   chapters.appendChild(ch4);
 
   wrap.appendChild(chapters);
+
+  const magma=document.createElement("div");
+  magma.className="card";
+  magma.innerHTML=`
+    <h2>🌋 まめ知識：マグマの粘り気と火山の形</h2>
+    <p>実は6兄弟の「色」は、マグマの<b>粘り気</b>ともつながっている。白っぽいマグマほどねばねば、黒っぽいマグマほどさらさら。ねばり気のちがいが、火山の形と噴火のしかたを決める。</p>
+    <table class="matrix">
+      <tr><th></th><th>リュウモン岩系</th><th>アンザン岩系</th><th>ゲンブ岩系</th></tr>
+      <tr><td>粘り気</td><td>${MAGMA_GROUPS.white.viscosity}</td><td>${MAGMA_GROUPS.mid.viscosity}</td><td>${MAGMA_GROUPS.black.viscosity}</td></tr>
+      <tr><td>山の形</td><td>${MAGMA_GROUPS.white.shape}</td><td>${MAGMA_GROUPS.mid.shape}</td><td>${MAGMA_GROUPS.black.shape}</td></tr>
+      <tr><td>噴火</td><td>${MAGMA_GROUPS.white.eruption}</td><td>${MAGMA_GROUPS.mid.eruption}</td><td>${MAGMA_GROUPS.black.eruption}</td></tr>
+    </table>
+    ${Object.values(MAGMA_GROUPS).map(g=>`
+      <p class="bubble narr" style="text-align:left;"><b>${g.label}</b>：${g.examples.join("／")}</p>
+    `).join("")}
+  `;
+  wrap.appendChild(magma);
 
   const gallery=document.createElement("div");
   gallery.className="card";
@@ -649,7 +684,7 @@ function renderStory(){
     row.innerHTML=`
       ${svgFace(r,48)}
       <div class="info">
-        <b>${r.name}（${r.yomi}）</b>
+        <b>${r.name}</b>
         <span><span class="tag ${r.type}">${TYPE_LABEL[r.type]}</span><span class="tag ${r.color}">${COLOR_LABEL[r.color]}</span></span>
         <span>${r.catch}</span>
       </div>
