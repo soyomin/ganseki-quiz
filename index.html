@@ -183,9 +183,7 @@ main{
 .bubble.king b{color:#fff;}
 ruby rt{font-size:0.6em;color:var(--sub);font-weight:normal;}
 .blank{background:#8A7C6C;color:#8A7C6C;border-radius:5px;padding:1px 5px;cursor:pointer;box-shadow:0 0 0 1px #6E6153 inset;}
-.blank rt{color:#8A7C6C;}
 .blank.revealed{background:transparent;color:var(--good);font-weight:bold;padding:1px 2px;box-shadow:none;}
-.blank.revealed rt{color:var(--sub);}
 .say{display:inline;white-space:normal;}
 .say-face{width:20px;height:20px;vertical-align:-4px;margin-right:2px;border-radius:50%;}
 
@@ -492,7 +490,7 @@ function speak(key, quoteHtml){
   return `<span class="say">${svgFace(byKey(key),20,"say-face")}${quoteHtml}</span>`;
 }
 function blank(term, reading){
-  return `<span class="blank" onclick="toggleBlank(this)"><ruby>${term}<rt>${reading}</rt></ruby></span>`;
+  return `<span class="blank" onclick="toggleBlank(this)">${term}（${reading}）</span>`;
 }
 function toggleBlank(el){
   el.classList.toggle("revealed");
