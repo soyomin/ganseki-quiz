@@ -172,6 +172,7 @@ main{
 .bubble.chant{background:transparent;border:1px dashed var(--accent);color:var(--text);margin:8px auto;max-width:100%;text-align:center;font-weight:bold;}
 .bubble b{color:var(--text);}
 .bubble.king b{color:#fff;}
+ruby rt{font-size:0.6em;color:var(--sub);font-weight:normal;}
 
 .tag{
   display:inline-block;
@@ -307,14 +308,14 @@ footer{text-align:center;color:var(--sub);font-size:0.72rem;padding:24px 10px 10
 
 <header>
   <h1><span class="deco">⛰️</span> 岩石きょうだいクイズ <span class="deco">⛰️</span></h1>
-  <p>火成岩6兄弟のひみつを、物語とクイズでまるごと覚えよう</p>
+  <p><ruby>火成岩<rt>かせいがん</rt></ruby>6兄弟のひみつを、物語とクイズでまるごと覚えよう</p>
 </header>
 
 <nav id="tabnav"></nav>
 
 <main id="main"></main>
 
-<footer>岩石きょうだいクイズ ・ 中学受験理科「火成岩」暗記アプリ</footer>
+<footer>岩石きょうだいクイズ ・ 中学受験理科「<ruby>火成岩<rt>かせいがん</rt></ruby>」暗記アプリ</footer>
 
 <script>
 /* ===================== データモデル ===================== */
@@ -347,7 +348,7 @@ const ROCKS = [
     line:"ハワイの溶岩は俺の仲間。冷えて固まると六角形の柱になるのが自慢だ。"
   },
   {
-    key:"kakou", name:"カコウ岩", yomi:"かこうがん",
+    key:"kakou", name:"カコウ岩", yomi:"かこうがん", alias:"ミカゲ石",
     type:"deep", color:"white", role:"深成岩三兄弟の長男",
     minerals:["セキエイ","チョウ石","クロウンモ"],
     texture:"等粒状組織（大きな結晶がぎっしり）",
@@ -397,6 +398,13 @@ const MAGMA_GROUPS = {
     examples:["キラウェア火山（アメリカ・ハワイ州）","※日本にはこのタイプの火山はほぼ見られない"],
   },
 };
+
+function rb(term, reading){
+  return `<ruby>${term}<rt>${reading}</rt></ruby>`;
+}
+function rubyType(type){
+  return type==="deep" ? rb("深成岩","しんせいがん") : rb("火山岩","かざんがん");
+}
 
 function svgFace(rock, size){
   const ink = FACE_INK[rock.color];
@@ -557,7 +565,7 @@ function renderStory(){
   intro.innerHTML=`
     <h2>🌋 プロローグ：マグマ大王の6人の子</h2>
     <p>地球のずっと奥深く、いつもグツグツ煮えたぎっている「マグマ大王」。実は大王には6人の子どもがいます。同じような材料から生まれたのに、育て方がちがうだけで、性格も見た目もまったく違う子に育ちました。</p>
-    <p>大王の育て方は2パターン。<b>①噴火で一気に地上へ飛び出させて急に冷やす</b>か、<b>②地下でじっくり数万年〜数百万年かけて冷やす</b>か。大急ぎで生まれた3人が「火山岩三兄弟」、じっくり育った3人が「深成岩三兄弟」です。</p>
+    <p>大王の育て方は2パターン。<b>①噴火で一気に地上へ飛び出させて急に冷やす</b>か、<b>②地下でじっくり数万年〜数百万年かけて冷やす</b>か。大急ぎで生まれた3人が「<ruby>火山岩<rt>かざんがん</rt></ruby>三兄弟」、じっくり育った3人が「<ruby>深成岩<rt>しんせいがん</rt></ruby>三兄弟」です。</p>
     <p class="bubble narr">——ただし、この6人。おたがいの存在を、まだ知りません。</p>
   `;
   wrap.appendChild(intro);
@@ -575,19 +583,19 @@ function renderStory(){
 
   const chapters=document.createElement("div");
   chapters.className="card";
-  chapters.innerHTML=`<h2>📖 全4話：きょうだいのひみつ</h2>`;
+  chapters.innerHTML=`<h2>📖 全5話：きょうだいのひみつ</h2>`;
 
   const ch1=document.createElement("details");
   ch1.className="chapter";
   ch1.innerHTML=`
     <summary>第1話　地上でばったり、なわばり争い</summary>
     <div class="body">
-      <p class="bubble narr">ドッカーン！　噴火が起こり、マグマが一気に地上へ飛び出しました。真っ先に地表に躍り出たのは、火山岩三兄弟です。</p>
+      <p class="bubble narr">ドッカーン！　噴火が起こり、マグマが一気に地上へ飛び出しました。真っ先に地表に躍り出たのは、<ruby>火山岩<rt>かざんがん</rt></ruby>三兄弟です。</p>
       <p class="bubble volc"><b>リュウモン岩</b>：「地上一番乗りは、ぼくらだ！　噴火で一気に生まれた、正真正銘のスピード岩石なんだから！」</p>
-      <p class="bubble volc"><b>アンザン岩</b>：「そうだそうだ！　日本の火山はほとんどオレでできてる。火山岩界の日本代表、アンザン岩とは俺のことよ！」</p>
+      <p class="bubble volc"><b>アンザン岩</b>：「そうだそうだ！　日本の火山はほとんどオレでできてる。<ruby>火山岩<rt>かざんがん</rt></ruby>界の日本代表、アンザン岩とは俺のことよ！」</p>
       <p class="bubble volc"><b>ゲンブ岩</b>：「ガハハ！　ハワイの溶岩といえばオレ！　冷えて固まりゃ六角形の柱、柱状節理！　かっこいいだろ！」</p>
       <p class="bubble narr">そこから長い長い年月がすぎ、大地がぐぐっと持ち上がり、雨と風が地面をけずって——地下深くで眠っていた3つの影が、ようやく地上に顔を出しました。</p>
-      <p class="bubble deep"><b>カコウ岩</b>：「ふむ。ここが地上か。……ずいぶんにぎやかだな。諸君、行儀よく整列。われら深成岩、堂々と参ろう」</p>
+      <p class="bubble deep"><b>カコウ岩</b>：「ふむ。ここが地上か。……ずいぶんにぎやかだな。諸君、行儀よく整列。われら<ruby>深成岩<rt>しんせいがん</rt></ruby>、堂々と参ろう」</p>
       <p class="bubble deep"><b>センリョク岩</b>：「……ぼくは目立たなくていいけどね」</p>
       <p class="bubble deep"><b>ハンレイ岩</b>：「…………ん」</p>
       <p class="bubble volc"><b>リュウモン岩</b>：「あれ！？　だれ！？」</p>
@@ -604,10 +612,10 @@ function renderStory(){
     <summary>第2話　虫めがね対決！　からだのつくり</summary>
     <div class="body">
       <p class="bubble narr">勝負その1は「からだのつくり」。ものしりのフクロウ博士が、大きな虫めがねでみんなを順番にのぞきます。</p>
-      <p class="bubble sensei"><b>博士</b>：「ホッホウ。火山岩の3人は……こまかいガラス質の<b>石基</b>の中に、小さな結晶の<b>斑晶</b>がぽつぽつ。急に冷えて、結晶が育つ時間がなかったのじゃ。これを<b>斑状組織</b>という」</p>
+      <p class="bubble sensei"><b>博士</b>：「ホッホウ。<ruby>火山岩<rt>かざんがん</rt></ruby>の3人は……こまかいガラス質の<b>石基</b>の中に、小さな結晶の<b>斑晶</b>がぽつぽつ。急に冷えて、結晶が育つ時間がなかったのじゃ。これを<b>斑状組織</b>という」</p>
       <p class="bubble volc"><b>リュウモン岩</b>：「え、ぼくたち、結晶……育ってないの？　このスジ模様（流理構造）、おしゃれだと思ってたのに……」</p>
-      <p class="bubble sensei"><b>博士</b>：「次、深成岩の3人……おお、見事じゃ。大きな結晶が、すきまなくぎっしり。地下でじっくり冷えたから、結晶が育つ時間がたっぷりあったのじゃな。これを<b>等粒状組織</b>という」</p>
-      <p class="bubble deep"><b>カコウ岩</b>：「ふふ、じっくりは裏切らない」</p>
+      <p class="bubble sensei"><b>博士</b>：「次、<ruby>深成岩<rt>しんせいがん</rt></ruby>の3人……おお、見事じゃ。大きな結晶が、すきまなくぎっしり。地下でじっくり冷えたから、結晶が育つ時間がたっぷりあったのじゃな。これを<b>等粒状組織</b>という」</p>
+      <p class="bubble deep"><b>カコウ岩</b>：「ふふ、じっくりは裏切らない。それに僕の体には<ruby>クロウンモ<rt>くろうんも</rt></ruby>（黒雲母）もキラキラ光ってるのが自慢さ」</p>
       <p class="bubble sensei"><b>博士</b>：「どちらが上でも下でもない。冷え方がちがうだけじゃよ。……それより、気づかんか？　おぬしら、顔がそっくりじゃぞ」</p>
       <p class="bubble narr">6人「「「「「「……え？」」」」」」</p>
     </div>
@@ -622,17 +630,18 @@ function renderStory(){
       <p class="bubble sensei"><b>博士</b>：「白っぽい順に、ならんでみい」</p>
       <p class="bubble narr">白っぽいカコウ岩のとなりに、白っぽいリュウモン岩。中間色のセンリョク岩のとなりに、中間色のアンザン岩。黒いハンレイ岩のとなりに、黒いゲンブ岩。</p>
       <table class="matrix">
-        <tr><th></th><th>火山岩（大急ぎ）</th><th>深成岩（じっくり）</th></tr>
+        <tr><th></th><th><ruby>火山岩<rt>かざんがん</rt></ruby>（大急ぎ）</th><th><ruby>深成岩<rt>しんせいがん</rt></ruby>（じっくり）</th></tr>
         <tr><td>白っぽい</td><td class="rock">リュウモン岩</td><td class="rock">カコウ岩</td></tr>
         <tr><td>中間</td><td class="rock">アンザン岩</td><td class="rock">センリョク岩</td></tr>
         <tr><td>黒っぽい</td><td class="rock">ゲンブ岩</td><td class="rock">ハンレイ岩</td></tr>
       </table>
       <p class="bubble volc"><b>アンザン岩</b>：「う、うそだろ……センリョク岩、おまえ、オレと同じ色……」</p>
       <p class="bubble deep"><b>センリョク岩</b>：「……きみもぼくも、チョウ石にカクセン石。中身までいっしょだ」</p>
-      <p class="bubble sensei"><b>博士</b>：「ホッホウ。色のひみつは<b>鉱物</b>じゃ。白っぽい2人はセキエイ・チョウ石——<b>無色鉱物</b>が中心。黒っぽい2人はキ石・カンラン石——<b>有色鉱物</b>が中心。有色鉱物が多いほど黒くなるのじゃ」</p>
+      <p class="bubble sensei"><b>博士</b>：「ホッホウ。色のひみつは<b>鉱物</b>じゃ。白っぽい2人は<ruby>セキエイ<rt>せきえい</rt></ruby>（石英）・<ruby>チョウ石<rt>ちょうせき</rt></ruby>（長石）——<b>無色鉱物</b>が中心。黒っぽい2人はキ石・カンラン石——<b>有色鉱物</b>が中心。有色鉱物が多いほど黒くなるのじゃ」</p>
       <p class="bubble volc"><b>ゲンブ岩</b>：「じゃあオレとハンレイ岩は、キ石とカンラン石の……」</p>
       <p class="bubble deep"><b>ハンレイ岩</b>：「…………双子、だ」</p>
       <p class="bubble volc"><b>ゲンブ岩</b>：「し、しゃべった——！！」</p>
+      <p class="bubble sensei"><b>博士</b>：「ついでに教えてやろう。<ruby>セキエイ<rt>せきえい</rt></ruby>のような無色鉱物が多いマグマは、粘り気が強くねばねば。有色鉱物が多いマグマは、さらさら流れやすい。じゃから色が白いほど粘り気が強く、黒いほど粘り気が弱いのじゃ」</p>
       <p class="bubble volc"><b>リュウモン岩</b>：「つまりぼくとカコウ岩は、同じ材料で……冷え方だけがちがう……」</p>
       <p class="bubble deep"><b>カコウ岩</b>：「地下でじっくり冷えれば、私。噴火で急に冷えれば、きみ。……勝負など、はじめから意味がなかったのだな」</p>
     </div>
@@ -647,7 +656,7 @@ function renderStory(){
       <p class="bubble narr">そのとき、地面がゴゴゴ……とゆれて、マグマ大王の声がひびきました。</p>
       <p class="bubble king">大王：「気づいたか、わが子らよ。おまえたちは3組の双子。じっくり組と、大急ぎ組。どちらもわしの自慢の子じゃ！」</p>
       <p class="bubble narr">6人は手をつなぎ、声をそろえて歌います。</p>
-      <p class="bubble chant">♪ りゅう（リュウモン）・あん（アンザン）・げん（ゲンブ）、白から黒へ、火山岩！<br>♪ かんせん（カコウ・センリョク）はんぱ（ハンレイ）ない、深成岩！</p>
+      <p class="bubble chant">♪ りゅう（リュウモン）・あん（アンザン）・げん（ゲンブ）、白から黒へ、<ruby>火山岩<rt>かざんがん</rt></ruby>！<br>♪ かんせん（カコウ・センリョク）はんぱ（ハンレイ）ない、<ruby>深成岩<rt>しんせいがん</rt></ruby>！</p>
       <p class="bubble volc"><b>リュウモン岩</b>：「急いで固まりゃ斑状さ！」</p>
       <p class="bubble deep"><b>カコウ岩</b>：「じっくり育てば等粒状」</p>
       <p class="bubble chant">全員：「色は鉱物、白・中間・黒！　ぼくらマグマ大王の、岩石きょうだい！」</p>
@@ -656,6 +665,24 @@ function renderStory(){
     </div>
   `;
   chapters.appendChild(ch4);
+
+  const ch5=document.createElement("details");
+  ch5.className="chapter";
+  ch5.innerHTML=`
+    <summary>番外編　似てる名前を整理しよう</summary>
+    <div class="body">
+      <p class="bubble narr">物語が終わったあと、博士が6人に手招きしました。</p>
+      <p class="bubble sensei"><b>博士</b>：「最後に、名前が似てるから毎年みんな混乱するやつを教えておこう」</p>
+      <p class="bubble sensei"><b>博士</b>：「まず<ruby>火成岩<rt>かせいがん</rt></ruby>。これはマグマが冷えて固まった岩石すべてをまとめた呼び名じゃ。つまり、おぬしら6人は全員<ruby>火成岩<rt>かせいがん</rt></ruby>じゃよ」</p>
+      <p class="bubble deep"><b>カコウ岩</b>：「なるほど、<ruby>火成岩<rt>かせいがん</rt></ruby>は僕らのチーム名みたいなものか」</p>
+      <p class="bubble sensei"><b>博士</b>：「そのチームの中で、地下でじっくり冷えた組が<ruby>深成岩<rt>しんせいがん</rt></ruby>、噴火で急に冷えた組が<ruby>火山岩<rt>かざんがん</rt></ruby>。つまり深成岩・火山岩は、<ruby>火成岩<rt>かせいがん</rt></ruby>という大きなチームの中の2つの部門じゃ」</p>
+      <p class="bubble volc"><b>リュウモン岩</b>：「じゃあ<ruby>変成岩<rt>へんせいがん</rt></ruby>って何？　僕らの親戚？」</p>
+      <p class="bubble sensei"><b>博士</b>：「いいや、あれはまったくの別家系じゃ。<ruby>変成岩<rt>へんせいがん</rt></ruby>はマグマからは生まれておらん。もとからあった別の岩石が、地下で熱や圧力を長い時間受けて、姿を変えてできた岩石じゃよ。たとえば石灰岩が熱で大理石に変わったりする」</p>
+      <p class="bubble deep"><b>ハンレイ岩</b>：「……つまり、生まれた場所も、生まれ方もちがう、ってことか」</p>
+      <p class="bubble sensei"><b>博士</b>：「そのとおり。<ruby>火成岩<rt>かせいがん</rt></ruby>＝マグマが冷え固まった全体、<ruby>深成岩<rt>しんせいがん</rt></ruby>・<ruby>火山岩<rt>かざんがん</rt></ruby>＝そのでき方のちがいによる2つの部門、<ruby>変成岩<rt>へんせいがん</rt></ruby>＝そもそも別の岩石が姿を変えたもの。この3つを混同しないようにな」</p>
+    </div>
+  `;
+  chapters.appendChild(ch5);
 
   wrap.appendChild(chapters);
 
@@ -673,8 +700,24 @@ function renderStory(){
     ${Object.values(MAGMA_GROUPS).map(g=>`
       <p class="bubble narr" style="text-align:left;"><b>${g.label}</b>：${g.examples.join("／")}</p>
     `).join("")}
+    <p class="bubble narr" style="text-align:left;">💡 覚え方：色・粘り気・山の形・実例は1本の鎖でつながっている。<b>白＝ねばねば＝ドーム＝有珠山</b>、<b>黒＝さらさら＝なだらか＝キラウェア</b>、というように、6兄弟の「白→黒」の並びにそのままつなげて覚えよう。</p>
   `;
   wrap.appendChild(magma);
+
+  const eruption=document.createElement("div");
+  eruption.className="card";
+  eruption.innerHTML=`
+    <h2>🌋 むかし話：噴火のなかまたち</h2>
+    <p>むかしむかし、火の山の中に、6人の「噴出物きょうだい」が住んでいました。噴火のたびに、それぞれちがう姿でとび出していきます。</p>
+    <p class="bubble narr" style="text-align:left;">いちばん最初にとび出すのは、まっ赤に燃えた<b>溶岩（ようがん）</b>。どろどろに溶けたまま地表を流れていきました。</p>
+    <p class="bubble narr" style="text-align:left;">空高く舞い上がったのは、こまかい灰のような姿の<b>火山灰（かざんばい）</b>。つぶの大きさは2mm以下で、風に乗ってはるか遠くの村まで飛んでいき、屋根や畑に静かに降り積もりました。</p>
+    <p class="bubble narr" style="text-align:left;">火山灰よりすこし大きい、2mm〜64mmのつぶは<b>火山レキ</b>という名の子。灰ほど遠くへは飛べないけれど、火口の近くにたくさん降り積もりました。</p>
+    <p class="bubble narr" style="text-align:left;">空を飛びながらくるくる回転し、着地するころには紡錘形に固まっていたのが<b>火山弾（かざんだん）</b>。マグマが空中で冷えて固まった、迫力満点の兄貴分です。</p>
+    <p class="bubble narr" style="text-align:left;">穴だらけの体で、なんと水に浮くこともあるのが<b>軽石（かるいし）</b>。マグマの中のガスがぬけたあとが、たくさんの穴になって残ったのです。</p>
+    <p class="bubble narr" style="text-align:left;">そして、いちばん恐れられていたのが<b>火砕流（かさいりゅう）</b>。高温の火山ガスと灰と岩のかけらが一体となって、時速100kmを超える速さで山の斜面を駆け下りる——村人たちが命がけで逃げなければならない、危険な現象でした。</p>
+    <p class="bubble narr" style="text-align:left;">こうして6人は、噴火のたびに山のふもとの村へ、それぞれの姿で挨拶にやってくるのでした。</p>
+  `;
+  wrap.appendChild(eruption);
 
   const gallery=document.createElement("div");
   gallery.className="card";
@@ -685,8 +728,8 @@ function renderStory(){
     row.innerHTML=`
       ${svgFace(r,48)}
       <div class="info">
-        <b>${r.name}</b>
-        <span><span class="tag ${r.type}">${TYPE_LABEL[r.type]}</span><span class="tag ${r.color}">${COLOR_LABEL[r.color]}</span></span>
+        <b>${r.name}${r.alias?` <small style="font-weight:normal;color:var(--sub);">（${r.alias}とも呼ばれる）</small>`:""}</b>
+        <span><span class="tag ${r.type}">${rubyType(r.type)}</span><span class="tag ${r.color}">${COLOR_LABEL[r.color]}</span></span>
         <span>${r.catch}</span>
       </div>
     `;
