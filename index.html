@@ -167,7 +167,11 @@ main{
 .bubble.deep{background:var(--deep-bubble-bg);margin-left:auto;text-align:right;border:1px solid var(--deep-bubble-border);}
 .bubble.volc{background:var(--volc-bubble-bg);border:1px solid var(--volc-bubble-border);}
 .bubble.narr{background:transparent;border:none;color:var(--sub);font-size:0.82rem;text-align:center;margin:10px auto;max-width:100%;}
+.bubble.sensei{background:var(--card);border:1px solid var(--accent-2);margin:8px auto;max-width:100%;}
+.bubble.king{background:var(--accent);color:#fff;border:none;margin:8px auto;max-width:100%;text-align:center;font-weight:bold;}
+.bubble.chant{background:transparent;border:1px dashed var(--accent);color:var(--text);margin:8px auto;max-width:100%;text-align:center;font-weight:bold;}
 .bubble b{color:var(--text);}
+.bubble.king b{color:#fff;}
 
 .tag{
   display:inline-block;
@@ -460,23 +464,30 @@ function renderStory(){
     <h2>🌋 プロローグ：マグマ大王の6人の子</h2>
     <p>地球のずっと奥深く、いつもグツグツ煮えたぎっている「マグマ大王」。実は大王には6人の子どもがいます。同じような材料から生まれたのに、育て方がちがうだけで、性格も見た目もまったく違う子に育ちました。</p>
     <p>大王の育て方は2パターン。<b>①地下でじっくり数万年〜数百万年かけて冷やす</b>か、<b>②噴火で一気に地上へ飛び出させて急に冷やす</b>か。じっくり育った3人が「深成岩三兄弟」、大急ぎで生まれた3人が「火山岩三兄弟」です。</p>
+    <p class="bubble narr">——ただし、この6人。おたがいの存在を、まだ知りません。</p>
   `;
   wrap.appendChild(intro);
 
   const chapters=document.createElement("div");
   chapters.className="card";
-  chapters.innerHTML=`<h2>📖 全6話：きょうだいのひみつ</h2>`;
+  chapters.innerHTML=`<h2>📖 全4話：きょうだいのひみつ</h2>`;
 
   const ch1=document.createElement("details");
   ch1.className="chapter";
   ch1.innerHTML=`
-    <summary>第1話　地底の三兄弟（深成岩）</summary>
+    <summary>第1話　地上でばったり、なわばり争い</summary>
     <div class="body">
-      <p class="bubble narr">地下深くの「じっくり育成部屋」。ここで数万年〜数百万年かけて冷やされると、体の中の結晶（鉱物のつぶ）がしっかり大きく育つ。これが「<b>等粒状組織</b>」。</p>
-      <p class="bubble deep"><b>花崗岩（長男）</b>：「地下でじっくり数万年！結晶をでっかく育てるのが俺の美学だ。セキエイ・チョウ石・クロウンモの3点セットで白くキラキラ、御影石として墓石やビルの壁で活躍してるぜ。」</p>
-      <p class="bubble deep"><b>閃緑岩（次男）</b>：「目立たないけど、白と黒のバランスなら俺が一番だと思ってる。チョウ石とカクセン石で、ごま塩みたいな模様なんだ。」</p>
-      <p class="bubble deep"><b>斑れい岩（三男）</b>：「……しゃべるのは苦手だ。キ石とカンラン石とチョウ石、黒くて重いのが俺の強みだ。」</p>
-      <p class="bubble narr">3兄弟まとめて覚える語呂：「<b>かんせん（花崗＋閃緑）はんぱ（斑れい）ない深成岩</b>」</p>
+      <p class="bubble narr">長い長い年月がすぎ、大地がぐぐっと持ち上がり、雨と風が地面をけずって——地下深くで眠っていた深成岩三兄弟が、はじめて地上に顔を出しました。</p>
+      <p class="bubble deep"><b>花崗岩</b>：「ふむ。ここが地上か。諸君、行儀よく整列。われら深成岩、堂々と参ろう」</p>
+      <p class="bubble deep"><b>閃緑岩</b>：「……ぼくは目立たなくていいけどね」</p>
+      <p class="bubble deep"><b>斑れい岩</b>：「…………ん」</p>
+      <p class="bubble narr">そこへ、溶岩の上をかけてくる3つの影。</p>
+      <p class="bubble volc"><b>流紋岩</b>：「ちょっとちょっとちょっと！　だれ！？　地上はぼくら火山岩のなわばりだよ！　ぼくら噴火で生まれた、正真正銘のスピード岩石なんだから！」</p>
+      <p class="bubble volc"><b>安山岩</b>：「そうだそうだ！　日本の火山はほとんどオレでできてる。火山岩界の日本代表、安山岩とは俺のことよ！」</p>
+      <p class="bubble volc"><b>玄武岩</b>：「ガハハ！　ハワイの溶岩といえばオレ！　冷えて固まりゃ六角形の柱、柱状節理！　かっこいいだろ！」</p>
+      <p class="bubble deep"><b>花崗岩</b>：「騒がしいな……。地上に出るのに数百万年かけた私たちこそ、本物の岩石だと思うが？　私など御影石と呼ばれ、墓石やビルの壁に選ばれる身だ」</p>
+      <p class="bubble volc"><b>流紋岩</b>：「数百万年！？　おっそ！　ぼくなんか噴火して一瞬で固まったね！」</p>
+      <p class="bubble deep"><b>花崗岩</b>：「よろしい。ならば勝負だ。どちらが"本物の岩石"か——」</p>
     </div>
   `;
   chapters.appendChild(ch1);
@@ -484,13 +495,15 @@ function renderStory(){
   const ch2=document.createElement("details");
   ch2.className="chapter";
   ch2.innerHTML=`
-    <summary>第2話　せっかち三兄弟（火山岩）</summary>
+    <summary>第2話　虫めがね対決！　からだのつくり</summary>
     <div class="body">
-      <p class="bubble narr">一方こちらは「噴火で一気に地上へ飛び出す」育て方をされた3人。急に冷やされるので結晶が育つ時間がなく、肌はガラスのようになめらか（<b>石基</b>）で、ところどころに小さな結晶（<b>斑晶</b>）が点々と浮く「<b>斑状組織</b>」になる。</p>
-      <p class="bubble volc"><b>流紋岩（長男）</b>：「兄ちゃん（花崗岩）とは双子で材料は同じ！でも俺はスピード重視、噴火で一気に地上へ！ガラス質の肌にスジ模様（流理構造）が自慢だ。」</p>
-      <p class="bubble volc"><b>安山岩（次男）</b>：「日本列島は火山だらけ。だから俺はどこの山にもいる、いわば火山岩界の日本代表だ！」</p>
-      <p class="bubble volc"><b>玄武岩（三男）</b>：「ハワイの溶岩は俺の仲間。冷えて固まると六角形の柱（柱状節理）になるのが自慢だ。」</p>
-      <p class="bubble narr">色の並びは「<b>りゅう（流紋）あん（安山）げん（玄武）</b>」＝白→中間→黒の順で覚えよう。</p>
+      <p class="bubble narr">勝負その1は「からだのつくり」。ものしりのフクロウ博士が、大きな虫めがねでみんなを順番にのぞきます。</p>
+      <p class="bubble sensei"><b>博士</b>：「ホッホウ。深成岩の3人は……見事じゃ。大きな結晶が、すきまなくぎっしり。地下でじっくり冷えたから、結晶が育つ時間がたっぷりあったのじゃな。これを<b>等粒状組織</b>という」</p>
+      <p class="bubble deep"><b>花崗岩</b>：「ふふ、じっくりは裏切らない」</p>
+      <p class="bubble sensei"><b>博士</b>：「次、火山岩の3人……おや？　こまかいガラス質の<b>石基</b>の中に、小さな結晶の<b>斑晶</b>がぽつぽつ。急に冷えて、結晶が育つ時間がなかったのじゃ。これを<b>斑状組織</b>という」</p>
+      <p class="bubble volc"><b>流紋岩</b>：「え、ぼくたち、結晶……育ってないの？　このスジ模様（流理構造）、おしゃれだと思ってたのに……」</p>
+      <p class="bubble sensei"><b>博士</b>：「どちらが上でも下でもない。冷え方がちがうだけじゃよ。……それより、気づかんか？　おぬしら、顔がそっくりじゃぞ」</p>
+      <p class="bubble narr">6人「「「「「「……え？」」」」」」</p>
     </div>
   `;
   chapters.appendChild(ch2);
@@ -498,18 +511,24 @@ function renderStory(){
   const ch3=document.createElement("details");
   ch3.className="chapter";
   ch3.innerHTML=`
-    <summary>第3話　双子なのに、なぜ違う姿に？</summary>
+    <summary>第3話　色をならべたら——双子！？</summary>
     <div class="body">
-      <p class="bubble narr">実は6兄弟は3組の「双子」。同じ材料（成分）から生まれているのに、育ち方の速さで見た目がまるで違う双子になった。</p>
+      <p class="bubble sensei"><b>博士</b>：「白っぽい順に、ならんでみい」</p>
+      <p class="bubble narr">白っぽい花崗岩のとなりに、白っぽい流紋岩。中間色の閃緑岩のとなりに、中間色の安山岩。黒い斑れい岩のとなりに、黒い玄武岩。</p>
       <table class="matrix">
         <tr><th></th><th>深成岩（じっくり）</th><th>火山岩（大急ぎ）</th></tr>
         <tr><td>白っぽい</td><td class="rock">花崗岩</td><td class="rock">流紋岩</td></tr>
         <tr><td>中間</td><td class="rock">閃緑岩</td><td class="rock">安山岩</td></tr>
         <tr><td>黒っぽい</td><td class="rock">斑れい岩</td><td class="rock">玄武岩</td></tr>
       </table>
-      <p class="bubble deep"><b>花崗岩</b>：「同じ材料でも、じっくり育てば結晶は大きく、粒がそろった等粒状組織になる。」</p>
-      <p class="bubble volc"><b>流紋岩</b>：「同じ材料でも、急いで生まれれば結晶が育つ時間がない。だからガラスっぽい石基に、小さな斑晶がちらほらの斑状組織になるんだ。」</p>
-      <p class="bubble narr">つまり「組織のちがい」＝「冷える速さのちがい」。材料（色・鉱物）が同じでも育て方で見た目が変わる、これが双子の秘密。</p>
+      <p class="bubble volc"><b>安山岩</b>：「う、うそだろ……閃緑岩、おまえ、オレと同じ色……」</p>
+      <p class="bubble deep"><b>閃緑岩</b>：「……きみもぼくも、チョウ石にカクセン石。中身までいっしょだ」</p>
+      <p class="bubble sensei"><b>博士</b>：「ホッホウ。色のひみつは<b>鉱物</b>じゃ。白っぽい2人はセキエイ・チョウ石——<b>無色鉱物</b>が中心。黒っぽい2人はキ石・カンラン石——<b>有色鉱物</b>が中心。有色鉱物が多いほど黒くなるのじゃ」</p>
+      <p class="bubble volc"><b>玄武岩</b>：「じゃあオレと斑れい岩は、キ石とカンラン石の……」</p>
+      <p class="bubble deep"><b>斑れい岩</b>：「…………双子、だ」</p>
+      <p class="bubble volc"><b>玄武岩</b>：「し、しゃべった——！！」</p>
+      <p class="bubble volc"><b>流紋岩</b>：「つまりぼくと花崗岩は、同じ材料で……冷え方だけがちがう……」</p>
+      <p class="bubble deep"><b>花崗岩</b>：「地下でじっくり冷えれば、私。噴火で急に冷えれば、きみ。……勝負など、はじめから意味がなかったのだな」</p>
     </div>
   `;
   chapters.appendChild(ch3);
@@ -517,31 +536,20 @@ function renderStory(){
   const ch4=document.createElement("details");
   ch4.className="chapter";
   ch4.innerHTML=`
-    <summary>第4話　色のひみつ（鉱物の話）</summary>
+    <summary>第4話　マグマ大王のうた</summary>
     <div class="body">
-      <p class="bubble narr">なぜ花崗岩・流紋岩ペアは白く、玄武岩・斑れい岩ペアは黒いのか。答えは中に入っている鉱物の種類。</p>
-      <p class="bubble narr"><b>無色鉱物</b>（セキエイ・チョウ石）が多い＝白っぽい体質。<b>有色鉱物</b>（クロウンモ・カクセン石・キ石・カンラン石）が多い＝黒っぽい体質。中間の閃緑岩・安山岩ペアはその両方をバランスよく持っている。</p>
-      <table class="matrix">
-        <tr><th>色</th><th>ペア</th><th>多い鉱物</th></tr>
-        <tr><td>白</td><td>花崗岩・流紋岩</td><td>セキエイ・チョウ石</td></tr>
-        <tr><td>中間</td><td>閃緑岩・安山岩</td><td>チョウ石・カクセン石</td></tr>
-        <tr><td>黒</td><td>斑れい岩・玄武岩</td><td>キ石・カンラン石</td></tr>
-      </table>
+      <p class="bubble narr">そのとき、地面がゴゴゴ……とゆれて、マグマ大王の声がひびきました。</p>
+      <p class="bubble king">大王：「気づいたか、わが子らよ。おまえたちは3組の双子。じっくり組と、大急ぎ組。どちらもわしの自慢の子じゃ！」</p>
+      <p class="bubble narr">6人は手をつなぎ、声をそろえて歌います。</p>
+      <p class="bubble chant">♪ かんせん（花崗・閃緑）はんぱ（斑れい）ない、深成岩！<br>♪ りゅう（流紋）・あん（安山）・げん（玄武）、白から黒へ、火山岩！</p>
+      <p class="bubble deep"><b>花崗岩</b>：「じっくり育てば等粒状」</p>
+      <p class="bubble volc"><b>流紋岩</b>：「急いで固まりゃ斑状さ！」</p>
+      <p class="bubble chant">全員：「色は鉱物、白・中間・黒！　ぼくらマグマ大王の、岩石きょうだい！」</p>
+      <p class="bubble narr">こうして6人は、世界のどこかで石ころを見つけるたび「これはどっちの兄弟かな？」とみんなに考えてもらえる、なかよしきょうだいになりましたとさ。</p>
+      <p class="bubble narr">——さあ、次はきみの番。クイズで6人を見分けられるかな？</p>
     </div>
   `;
   chapters.appendChild(ch4);
-
-  const ch5=document.createElement("details");
-  ch5.className="chapter";
-  ch5.innerHTML=`
-    <summary>第5話　きょうだい大集合（まとめ）</summary>
-    <div class="body">
-      <p class="bubble narr">6兄弟が縦横の表で仲直り。「でき方（縦）×色（横）」の2つの軸さえ覚えれば、どの岩石も迷わず言い当てられる。</p>
-      <p class="bubble narr">語呂まとめ：深成岩は「<b>かんせん（花崗＋閃緑）はんぱ（斑れい）ない</b>」／火山岩は「<b>りゅう・あん・げん</b>」で白→中間→黒の順。</p>
-      <p class="bubble narr">組織のちがいは「<b>じっくり＝等粒状、大急ぎ＝斑状</b>」。この4つの合言葉があれば火成岩はもう怖くない！</p>
-    </div>
-  `;
-  chapters.appendChild(ch5);
 
   wrap.appendChild(chapters);
 
