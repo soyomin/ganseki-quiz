@@ -682,7 +682,7 @@ function renderStory(){
       ${svgFace(r,48)}
       <div class="info">
         <b>${r.name}${r.alias?` <small style="font-weight:normal;color:var(--sub);">（${r.alias}とも呼ばれる）</small>`:""}</b>
-        <span><span class="tag ${r.type}">${rubyType(r.type)}</span><span class="tag ${r.color}">${COLOR_LABEL[r.color]}</span></span>
+        <span><span class="tag ${r.type}">${TYPE_LABEL[r.type]}</span><span class="tag ${r.color}">${COLOR_LABEL[r.color]}</span></span>
         <span>${r.catch}</span>
       </div>
     `;
